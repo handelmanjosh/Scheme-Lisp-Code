@@ -1,0 +1,18 @@
+(define (mult-1 a b)
+  (if (= b 0) 0 (+ a (mult-1 a (- b 1))))
+  )
+
+(define (double x)
+  (+ x x)
+  )
+(define (half x)
+  (/ x 2)
+  )
+(define (fast-mult a b)
+  (cond ((= b 0) 0)
+        ((even? b) (+ (double a) (fast-mult a (- b 2))))
+        (else (+ a (fast-mult a (- b 1))))
+        )
+  )
+
+(fast-mult 4 40)

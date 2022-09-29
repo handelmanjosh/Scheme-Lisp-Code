@@ -1,0 +1,40 @@
+; if n is a prime number and a is any positive integer less than n, then a raised to the nth power is congruent to a remainder n
+(#%require (only racket/base current-milliseconds))
+(#%require (only racket/base random))
+(define (runtime) (current-milliseconds))
+
+
+(define (exp-1 x p)
+  (cond ((= p 0) 1)
+        ((= p 1) x)
+        (else (* x (exp-1 x (- p 1))))
+        )
+  )
+
+(define (prime? n primes start-time)
+  (define (prime-display n primes start-time)
+    (newline)
+    (display n)
+    (newline)
+    (display "Time: ") 
+    (display (- (runtime) start-time))
+    (display "ms")
+    (first-six-primes (+ n 2) (+ primes 1))
+    )
+  (define (fermat n)
+    (define a (random (- n 1)))
+    (if (= (remainder (exp-1 a n) n) (remainder a n)) #t #f)
+    )
+  (if (fermat n)
+     (prime-display n primes start-time) (first-six-primes (+ n 2) primes))
+  )
+
+(define (first-six-primes n primes)
+  (if (< primes 6) (prime? n primes (runtime)))
+  )
+
+(define (prime-in-range low)
+  (if (odd? low) (first-six-primes low 0) (first-six-primes (+ low 1) 0))
+  )
+
+(prime-in-range 1000)

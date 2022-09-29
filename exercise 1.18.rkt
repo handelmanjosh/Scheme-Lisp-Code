@@ -1,0 +1,21 @@
+(define (valid? x)
+  (if (integer? x) x (valid? (* 10 x)))
+  )
+(define (mult-non-ints a b)
+  (define b2 (valid? b))
+  (display b2)
+  (define ten (/ b2 b))
+  (display "\n")
+  (display ten)
+  (define (mult-iter v1 v2)
+    (cond ((= v2 0) 0)
+          ((even? v2) (+ (+ v1 v1) (mult-iter v1 (- v2 2))))
+          (else (+ v1 (mult-iter v1 (- v2 1))))
+      )
+    )
+  (display "\n")
+  (/ (mult-iter a b2) ten)
+  )
+
+
+;if decimal, multiply to get rid of decimal. At end divide by what we multiplied by. 

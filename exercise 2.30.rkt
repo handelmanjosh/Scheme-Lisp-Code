@@ -1,0 +1,15 @@
+(define (map-tree procedure tree)
+  (if (null? tree) '()
+      (if (list? (car tree))
+          (append (list (map-tree procedure (car tree))) (map-tree procedure (cdr tree)))
+          (append (list (procedure (car tree))) (map-tree procedure (cdr tree)))
+          )
+      )
+  )
+
+(define (square x) (* x x))
+
+(define tree (list (list 5 6) 5 6 (list (list 6 5) 7)))
+(display tree)
+(newline)
+(map-tree square tree)

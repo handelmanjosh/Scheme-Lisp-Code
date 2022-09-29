@@ -1,0 +1,20 @@
+(#%require (only racket/base random))
+
+(define (exp-1 x p)
+  (cond ((= p 0) 1)
+        ((= p 1) x)
+        (else (* x (exp-1 x (- p 1))))
+        )
+  )
+(define (square x)
+  (* x x)
+  )
+(define (miller n a)
+  (if (= (remainder (exp-1 a (- n 1)) n) (remainder 1 n)) #t #f)
+    )
+
+(define (miller-rabin n)
+  (miller  n (random (- n 1)))
+  )
+
+(miller-rabin 1999)
